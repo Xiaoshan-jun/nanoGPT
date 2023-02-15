@@ -7,18 +7,21 @@ from contextlib import nullcontext
 import torch
 import tiktoken
 from model import GPTConfig, GPT
+import numpy as np
+import matplotlib.pyplot as plt
 
 # -----------------------------------------------------------------------------
 init_from = 'resume' # either 'resume' (from an out_dir) or a gpt2 variant (e.g. 'gpt2-xl')
 out_dir = 'out' # ignored if init_from is not 'resume'
 start = "\n" # or "<|endoftext|>" or etc. Can also specify a file, use as: "FILE:prompt.txt"
+valfile = "\n"
 num_samples = 10 # number of samples to draw
-max_new_tokens = 500 # number of tokens generated in each sample
+max_new_tokens = 386 # number of tokens generated in each sample
 temperature = 0.8 # 1.0 = no change, < 1.0 = less random, > 1.0 = more random, in predictions
 top_k = 200 # retain only the top_k most likely tokens, clamp others to have 0 probability
 seed = 1337
 device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1', etc.
-dtype = 'bfloat16' # 'float32' or 'bfloat16' or 'float16'
+dtype = 'float16' # 'float32' or 'bfloat16' or 'float16'
 compile = False # use PyTorch 2.0 to compile the model to be faster
 exec(open('configurator.py').read()) # overrides from command line or config file
 # -----------------------------------------------------------------------------
@@ -30,6 +33,7 @@ torch.backends.cudnn.allow_tf32 = True # allow tf32 on cudnn
 device_type = 'cuda' if 'cuda' in device else 'cpu' # for later use in torch.autocast
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
+
 
 # model
 if init_from == 'resume':
@@ -79,11 +83,64 @@ if start.startswith('FILE:'):
         start = f.read()
 start_ids = encode(start)
 x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
-
 # run generation
 with torch.no_grad():
     with ctx:
         for k in range(num_samples):
             y = model.generate(x, max_new_tokens, temperature=temperature, top_k=top_k)
+            with open("output.txt", "w") as file:
+                print(decode(y[0].tolist()), file = file)
+            with open("output.txt", 'r') as f:
+                data = []
+                for line in f:
+                    line = line.strip().split('\t')
+                    line = [float(i) for i in line]
+                    data.append(line)
+                print(data)
+                data = np.asarray(data)
+            with open("gt.txt", 'r') as f:
+                data_gt = []
+                for line in f:
+                    line = line.strip().split('\t')
+                    line = [float(i) for i in line]
+                    data_gt.append(line)
+                data_gt = np.asarray(data_gt)
+                data_gt = data_gt.T[2:]
+                # print(pred_traj_gtp)
+            fig = plt.figure(figsize=(8, 6))
+            ax = fig.add_subplot(projection='3d')
+            ax.set_title('NanoGPT predict vertical landing')
+            ax.set_xlabel('x')
+            ax.set_ylabel('y')
+            ax.set_zlabel('z')
+            obs_trajp = data.T[2:]
+            obs_trajpx = obs_trajp[0]
+            obs_trajpy = obs_trajp[1]
+            obs_trajpz = obs_trajp[2]
+            gen_trajx = obs_trajpx[10:20];
+            gen_trajy = obs_trajpy[10:20];
+            gen_trajz = obs_trajpz[10:20];
+            print(gen_trajz)
+            data_gtx = data_gt[0]
+            data_gty = data_gt[1]
+            data_gtz = data_gt[2]
+            print(data_gtz)
+            dx = data_gtx - gen_trajx
+            dy = data_gty - gen_trajy
+            dz = data_gtz - gen_trajz
+            p = []
+            print(dz)
+            for i in range(10):
+                p.append(np.sqrt(dx[i]**2 + dy[i]**2+ dz[i]**2))
+                print('ade point%i:  ' + str(p[i]), i)
+            ax.scatter(obs_trajpx[0:10], obs_trajpy[0:10], obs_trajpz[0:10], s=10, label="observed trajectory", c='red')
+            ax.scatter(obs_trajpx[10:20], obs_trajpy[10:20], obs_trajpz[10:20], s=10, label="generated trajectory", c='blue')
+            #ax.scatter(pred_traj_gtp.T[0], pred_traj_gtp.T[1], pred_traj_gtp.T[2], s=10, label="real trajectory",          c='orange')
+            #ax.scatter(pred_traj_fake.T[0], pred_traj_fake.T[1], pred_traj_fake.T[2], s=10,    label="predict trajectory", c='blue')
+            # print(pred_traj_fake)
+            ax.legend()
+            plt.savefig('books_read%i.png' % 1)
+
             print(decode(y[0].tolist()))
             print('---------------')
+

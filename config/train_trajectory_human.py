@@ -1,7 +1,7 @@
 # train a trajectory based model with char
 # good for debugging and playing on macbooks and such
 
-out_dir = 'out-trajectory'
+out_dir = 'out-trajectory_human'
 eval_interval = 250 # keep frequent because we'll overfit
 eval_iters = 200
 log_interval = 10 # don't print too too often
@@ -10,10 +10,10 @@ log_interval = 10 # don't print too too often
 always_save_checkpoint = False
 
 wandb_log = False # override via command line if you like
-wandb_project = 'trajectory'
+wandb_project = 'trajectory_real'
 wandb_run_name = 'mini-gpt'
 
-dataset = 'trajectory'
+dataset = 'trajectory_real'
 batch_size = 64
 block_size = 256 # context of up to 256 previous characters
 
