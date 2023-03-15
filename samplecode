@@ -1,2 +1,2 @@
-python sample.py     --out_dir=out-trajectory     --start=FILE:promp.txt     --num_samples=1 --max_new_tokens=386
+python sample.py     --out_dir=out-trajectory_human
 

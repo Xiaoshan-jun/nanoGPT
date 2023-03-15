@@ -49,7 +49,7 @@ tokenized = split_dataset.map(
 )
 
 # concatenate all the ids in each dataset into one large file we can use for training
-for split, dset in tokenized.items():
+for split, dset in  .items():
     arr_len = np.sum(dset['len'])
     filename = os.path.join(os.path.dirname(__file__), f'{split}.bin')
     dtype = np.uint16 # (can do since enc.max_token_value == 50256 is < 2**16)

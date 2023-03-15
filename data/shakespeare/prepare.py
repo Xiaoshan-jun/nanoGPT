@@ -11,7 +11,7 @@ if not os.path.exists(input_file_path):
         f.write(requests.get(data_url).text)
 
 with open(input_file_path, 'r') as f:
-data = f.read()
+    data = f.read()
 print('dasdsadsadsa')
 print(data[0])
 n = len(data)
