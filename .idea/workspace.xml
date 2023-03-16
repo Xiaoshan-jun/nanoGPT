@@ -5,35 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3e3fae2-efc3-4fe8-a3d8-707519b2c746" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/train_trajectory_human_char.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/prepare_char.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/traindata.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata19.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata29.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata39.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata49.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata59.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata69.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata79.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/val/valdata9.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/trajectory_real/valdata.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sample_char.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books_read1.png" beforeDir="false" afterPath="$PROJECT_DIR$/books_read1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/train_trajectory_human.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/train_trajectory_human.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/openwebtext/prepare.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/openwebtext/prepare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/shakespeare/prepare.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/shakespeare/prepare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/trajectory_real/combine.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/combine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/trajectory_real/combined_file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/combined_file.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/trajectory_real/combined_file_val.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/combined_file_val.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/trajectory_real/meta.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/meta.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/trajectory_real/prepare.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/prepare.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/train_trajectory_human_char.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/train_trajectory_human_char.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trajectory_real/train.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/train.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trajectory_real/traindata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/traindata.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trajectory_real/val.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/val.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/promp.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/sample.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/samplecode" beforeDir="false" afterPath="$PROJECT_DIR$/samplecode" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/trajectory_real/valdata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/valdata.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +34,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/jun/nanoGPT/data/trajectory_real/val",
+    "last_opened_file_path": "/home/jxiang9143/github/nanoGPT/data/trajectory_real",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -65,10 +45,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data/trajectory_real/val" />
       <recent name="$PROJECT_DIR$/data/trajectory_real" />
-      <recent name="$PROJECT_DIR$/config" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/data/trajectory_real/val" />
+      <recent name="$PROJECT_DIR$/config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/trajectory_real" />
@@ -117,6 +97,7 @@
       <workItem from="1678695717342" duration="9755000" />
       <workItem from="1678768116520" duration="19091000" />
       <workItem from="1678843045580" duration="5739000" />
+      <workItem from="1678913984427" duration="8567000" />
     </task>
     <servers />
   </component>
