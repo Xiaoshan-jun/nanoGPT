@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3e3fae2-efc3-4fe8-a3d8-707519b2c746" name="Changes" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/sample_char.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/train_trajectory_human.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/train_trajectory_human.py" afterDir="false" />
@@ -14,6 +15,15 @@
       <change beforePath="$PROJECT_DIR$/data/trajectory_real/val.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/val.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trajectory_real/valdata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/trajectory_real/valdata.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example.txt" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/config/train_trajectory_linear.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/train_trajectory_linear_char.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/trajectory_linear/prepare.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/trajectory_linear/prepare_char.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/sample.py" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +44,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
+<<<<<<< Updated upstream
     "last_opened_file_path": "/home/jxiang9143/github/nanoGPT/data/trajectory_real",
+=======
+    "last_opened_file_path": "/home/jun/nanoGPT/config",
+>>>>>>> Stashed changes
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -45,6 +59,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+<<<<<<< Updated upstream
+=======
+      <recent name="$PROJECT_DIR$/config" />
+      <recent name="$PROJECT_DIR$/data/trajectory_linear" />
+      <recent name="$PROJECT_DIR$/data/trajectory_real/val" />
+>>>>>>> Stashed changes
       <recent name="$PROJECT_DIR$/data/trajectory_real" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data/trajectory_real/val" />
@@ -96,8 +116,13 @@
       <workItem from="1678612449181" duration="1895000" />
       <workItem from="1678695717342" duration="9755000" />
       <workItem from="1678768116520" duration="19091000" />
+<<<<<<< Updated upstream
       <workItem from="1678843045580" duration="5739000" />
       <workItem from="1678913984427" duration="8567000" />
+=======
+      <workItem from="1678843045580" duration="5838000" />
+      <workItem from="1679177306680" duration="3457000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>

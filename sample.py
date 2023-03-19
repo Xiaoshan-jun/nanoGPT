@@ -78,7 +78,7 @@ else:
     decode = lambda l: enc.decode(l)
 
 # encode the beginning of the prompt0
-directory = 'data/trajectory_real/val/' # Replace with the path to your directory
+directory = 'data/trajectory_linear/val/' # Replace with the path to your directory
 file = open("example.txt", "w")
 for filename in os.listdir(directory):
     if filename.endswith('.txt'):
