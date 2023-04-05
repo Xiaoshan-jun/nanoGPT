@@ -5,10 +5,10 @@
 %fileID = fopen('datasets/linear/vis/vis.txt','w');
 %fileID = fopen('train.txt','w');
 %fileID = fopen('val.txt','w');
-fileID = fopen('testgt.txt','w');
-fileID = fopen('testdisrupt.txt','w');
-fileID = fopen('testmusk.txt','w');
-fileID = fopen('testpointmusk.txt','w');
+% fileID = fopen('testgt.txt','w');
+% fileID = fopen('testdisrupt.txt','w');
+% fileID = fopen('testmusk.txt','w');
+% fileID = fopen('testpointmusk.txt','w');
 mvx = 25; %max horizontal speed
 mvy = 25; %max horizontal speed
 mvz = 9;  %max descend speed
@@ -25,8 +25,8 @@ for i = 1 : 12 %trajectory number
     end
     destination = [0, 0, 0];
     first = 1;        
-    filename = sprintf('val/testgt%d.txt', i);
-    fileID = fopen(filename,'w');
+%     filename = sprintf('val/testgt%d.txt', i);
+%     fileID = fopen(filename,'w');
 
     for t = 1 : 20
         vb = (destination - state)/(21 - t);
@@ -199,6 +199,14 @@ for i = 1 : 12 %trajectory number
     zlabel('z', 'FontSize', 14)
     hold on
 end
-str = sprintf('linear%d.png', i);
-print(gcf,str,'-dpng','-r900'); 
+%str = sprintf('linear%d.png', i);
+%print(gcf,str,'-dpng','-r900'); 
 fclose(fileID);
+points = [transpose(historyx), transpose(historyy), transpose(historyz)];
+% Compute the convex hull using the convhulln function
+K = convhulln(points);
+
+% Generate a mesh using the vertices and faces of the convex hull
+vertices = points;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
