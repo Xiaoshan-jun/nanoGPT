@@ -15,7 +15,7 @@ mvz = 9;  %max descend speed
 point = [];
 point1 = [];
 point2 = [];
-point3 = [];
+point4 = [];
 point4 = [];
 point5 = [];
 point6 = [];
@@ -108,16 +108,80 @@ end
 %str = sprintf('linear%d.png', i);
 %print(gcf,str,'-dpng','-r900'); 
 
-points = [transpose(historyx), transpose(historyy), transpose(historyz)];
-% Compute the convex hull using the convhulln function
 K = convhulln(point);
-
-% Generate a mesh using the vertices and faces of the convex hull
 vertices = point;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+hold on
+% Compute the convex hull using the convhulln function
+point1 = point(1:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point1);
+vertices = point1;
 faces = K;
 trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
 title('linear landing', 'FontSize', 14)
 xlabel('x', 'FontSize', 14)
 ylabel('y', 'FontSize', 14)
 zlabel('z', 'FontSize', 14)
-hold on
+point2 = point(2:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point2);
+vertices = point2;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+point3 = point(3:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point3);
+vertices = point3;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+point4 = point(4:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point4);
+vertices = point4;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+point5 = point(5:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point5);
+vertices = point5;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+point6 = point(6:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point6);
+vertices = point6;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+
+point7 = point(7:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point7);
+vertices = point7;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+
+
+point8 = point(8:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point8);
+vertices = point8;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+
+
+point9 = point(9:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point9);
+vertices = point9;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+
+point10 = point(10:20:end,:);
+% Generate a mesh using the vertices and faces of the convex hull
+K = convhulln(point10);
+vertices = point10;
+faces = K;
+trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+
