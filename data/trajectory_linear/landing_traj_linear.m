@@ -4,7 +4,7 @@
 %fileID = fopen('datasets/linear/val/val.txt','w');
 %fileID = fopen('datasets/linear/vis/vis.txt','w');
 %fileID = fopen('train.txt','w');
-%fileID = fopen('val.txt','w');
+fileID = fopen('val.txt','w');
 % fileID = fopen('testgt.txt','w');
 % fileID = fopen('testdisrupt.txt','w');
 % fileID = fopen('testmusk.txt','w');
@@ -27,7 +27,6 @@ for i = 1 : 12 %trajectory number
     first = 1;        
 %     filename = sprintf('val/testgt%d.txt', i);
 %     fileID = fopen(filename,'w');
-
     for t = 1 : 20
         vb = (destination - state)/(21 - t);
         if mod(i,4) == 0
@@ -65,8 +64,8 @@ for i = 1 : 12 %trajectory number
     end
     %disrupt
     for d = 1:10
-        filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -101,8 +100,8 @@ for i = 1 : 12 %trajectory number
 
     %disruption with variable musk
     for d = 1:10
-        filename = sprintf('val/testmusk%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testmusk%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -146,8 +145,8 @@ for i = 1 : 12 %trajectory number
     end
     %disruption with point missed
     for d = 1:10
-        filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -175,8 +174,8 @@ for i = 1 : 12 %trajectory number
            if rand()< 0.1
                newhistoryz = 0;
            end
-           if rand()> 0.15
-            fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+           if rand()> 0.15 || t == 1
+                fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
            end
         end
         for t = 11:20
