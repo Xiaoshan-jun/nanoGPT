@@ -108,10 +108,10 @@ end
 %str = sprintf('linear%d.png', i);
 %print(gcf,str,'-dpng','-r900'); 
 
-K = convhulln(point);
-vertices = point;
-faces = K;
-trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+[F, V] = boundary(point, 0);
+vertices = V;
+faces = F;
+trisurf(faces, point(:,1), point(:,2), point(:,3));
 hold on
 % Compute the convex hull using the convhulln function
 point1 = point(1:20:end,:);
