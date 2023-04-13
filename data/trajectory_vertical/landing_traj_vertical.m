@@ -3,7 +3,7 @@
 %fileID = fopen('datasets/linear/train/train.txt','w');
 %fileID = fopen('datasets/linear/val/val.txt','w');
 %fileID = fopen('datasets/linear/vis/vis.txt','w');
-%fileID = fopen('train.txt','w');
+fileID = fopen('train.txt','w');
 %fileID = fopen('val.txt','w');
 % fileID = fopen('testgt.txt','w');
 % fileID = fopen('testdisrupt.txt','w');
@@ -13,7 +13,7 @@ mvx = 25; %max horizontal speed
 mvy = 25; %max horizontal speed
 mvz = 9;  %max descend speed
 
-for i = 1 : 12 %trajectory number
+for i = 1 : 100 %trajectory number
     if mod(i,4) == 0
     state = [400 + 200*(rand()-0.5) , 400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
     elseif mod(i,4) == 1
@@ -24,8 +24,8 @@ for i = 1 : 12 %trajectory number
     state = [-400 + 200*(rand()-0.5) , -400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
     end
     first = 1;        
-    filename = sprintf('val/testgt%d.txt', i);
-    fileID = fopen(filename,'w');
+%     filename = sprintf('val/testgt%d.txt', i);
+%     fileID = fopen(filename,'w');
     destination = [0, 0, state(3)];
     for t = 1 : 9
         vb = (destination - state)/(11 - t);
@@ -100,8 +100,8 @@ for i = 1 : 12 %trajectory number
     end
     %disrupt
     for d = 1:10
-        filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -136,8 +136,8 @@ for i = 1 : 12 %trajectory number
 
     %disruption with variable musk
     for d = 1:10
-        filename = sprintf('val/testmusk%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testmusk%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -155,15 +155,15 @@ for i = 1 : 12 %trajectory number
            dz = 0.5*(rand()-0.5);
            newhistoryx = newhistoryx + dx;
            if rand()< 0.1
-               newhistoryx = 0;
+               newhistoryx = newhistoryx + 10*dx;
            end
            newhistoryy = newhistoryy + dy;
            if rand()< 0.1
-               newhistoryy = 0;
+               newhistoryy = newhistoryy + 10*dy;
            end
            newhistoryz = newhistoryz + dz;
            if rand()< 0.1
-               newhistoryz = 0;
+               newhistoryz = newhistoryz + 10*dz;
            end
            
            fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
@@ -181,8 +181,8 @@ for i = 1 : 12 %trajectory number
     end
     %disruption with point missed
     for d = 1:10
-        filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
-        fileID = fopen(filename,'w');
+%         filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
+%         fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -200,18 +200,20 @@ for i = 1 : 12 %trajectory number
            dz = 0.5*(rand()-0.5);
            newhistoryx = newhistoryx + dx;
            if rand()< 0.1
-               newhistoryx = 0;
+               newhistoryx = newhistoryx + 10*dx;
            end
            newhistoryy = newhistoryy + dy;
            if rand()< 0.1
-               newhistoryy = 0;
+               newhistoryy = newhistoryy + 10*dy;
            end
            newhistoryz = newhistoryz + dz;
            if rand()< 0.1
-               newhistoryz = 0;
+               newhistoryz = newhistoryz + 10*dz;
            end
            if rand()> 0.15
-            fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+                fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+           else
+                fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx+10*dx,newhistoryy+10*dy,newhistoryz+10*dz);
            end
         end
         for t = 11:20
