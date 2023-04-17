@@ -10,8 +10,8 @@ wandb_log = False # feel free to turn on
 wandb_project = 'shakespeare'
 wandb_run_name = 'ft-' + str(time.time())
 
-dataset = trajectory_real
-init_from = 'gpt2-xl' # this is the largest GPT-2 model
+dataset = 'trajectory_linear'
+init_from = 'gpt2' # this is the largest GPT-2 model
 
 # only save checkpoints if the validation loss improves
 always_save_checkpoint = False

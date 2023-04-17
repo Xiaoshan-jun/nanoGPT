@@ -95,7 +95,7 @@ for filename in os.listdir(directory):
     n = n - 1
     past = data[:int(n)]
     past = '\n'.join(past)
-    #past = past + '\n' + "future"
+    past = past + '\n' + "future"
     print(past)
     gt = data[int(n):]
     gtarray = []
@@ -128,7 +128,7 @@ for filename in os.listdir(directory):
                         #print(o)
                         #print(decode(y[0].tolist()))
                     line = line.strip().split('\t')
-                    #print(line)
+                    print(line)
                     for i in range(1, 4):
                         if len(line) > i:
                             prediction[j][i-1] = line[i]
