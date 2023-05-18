@@ -21,7 +21,7 @@ import time
 import math
 import pickle
 from contextlib import nullcontext
-
+import time
 import numpy as np
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -241,6 +241,8 @@ t0 = time.time()
 local_iter_num = 0 # number of iterations in the lifetime of this process
 raw_model = model.module if ddp else model # unwrap DDP container if needed
 running_mfu = -1.0
+print(block_size)
+tstart = time.time()
 while True:
 
     # determine and set the learning rate for this iteration
@@ -315,8 +317,9 @@ while True:
     local_iter_num += 1
 
     # termination conditions
-    if iter_num > max_iters:
-        break
+    # if iter_num > max_iters or time.time() - tstart > 36000:
+    #     print('overtime')
+    #     break
 
 if ddp:
     destroy_process_group()

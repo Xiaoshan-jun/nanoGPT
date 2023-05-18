@@ -10,6 +10,7 @@ from model import GPTConfig, GPT
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from statistics import variance
 
 # -----------------------------------------------------------------------------
 init_from = 'resume' # either 'resume' (from an out_dir) or a gpt2 variant (e.g. 'gpt2-xl')
@@ -80,15 +81,22 @@ else:
 
 # encode the beginning of the prompt0
 directory = 'data/trajectory_real/val/' # Replace with the path to your directory
-file = open("example.txt", "w")
+t0 = time.time()
+num_tested = 0
+fde = []
+ade = []
+miss = 0
 for filename in os.listdir(directory):
-    if filename.endswith('.txt'):
-
+    #if filename.startswith('testdisrupt'):
+    #if filename.startswith('testmusk'):
+    #if filename.startswith('testpointmusk'):
+    if filename.startswith('testgt'):
         with open(directory + filename) as f:
             data = f.read()
     else:
         continue
     print(filename)
+    num_tested += 1
     data = data.split('\n')
     x = 'p'
     n = 1
@@ -108,83 +116,115 @@ for filename in os.listdir(directory):
           gtarray.append(line)
     gtarray = np.asarray(gtarray)
     print(gtarray)
-    print(len(gtarray))
     prediction = gtarray.copy()
     start_ids = encode(past)
     x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
     # run generation
-    gtimerecord = []
     with torch.no_grad():
         with ctx:
             for k in range(num_samples):
                 y = model.generate(x, 1, temperature=temperature, top_k=top_k)
                 x = torch.cat((x, y), dim=1)
+                if y[0].tolist()[0] > 22:
+                    y = model.generate(x, 1, temperature=temperature, top_k=top_k)
+                    x = torch.cat((x, y), dim=1)
                 o = decode(y[0].tolist())
-                file.write(o)
                 if o == '\n':
                     continue
                 line = o;
                 while o != '\n':
                     y = model.generate(x, 1, temperature=temperature, top_k=top_k)
-                    x = torch.cat((x, y), dim=1)
+                    if y[0].tolist()[0] > 22:
+                        continue
                     o = decode(y[0].tolist())
-                    file.write(o)
+                    x = torch.cat((x, y), dim=1)
                     line = line + o;
                     # print(o)
                     # print(decode(y[0].tolist()))
                 line = line.strip().split('\t')
                 print(line)
-                for i in range(3):
-                    if len(line) > i:
-                        prediction[0][i] = line[i]
-                    else:
-                        prediction[0][i] = 0
+                for i in range(4):
+                    while True:
+                        if len(line) > i:
+                            try:
+                                prediction[0][i] = line[i]
+                                break
+                            except ValueError:
+                                line.pop(i)
+                        else:
+                            prediction[0][i] = -1000
+                            break
                 for j in range(1, len(prediction)):
-                    t0 = time.time()
                     y = model.generate(x, 1, temperature=temperature, top_k=top_k)
                     x = torch.cat((x, y), dim=1)
+                    if y[0].tolist()[0] > 22:
+                        y = model.generate(x, 1, temperature=temperature, top_k=top_k)
+                        x = torch.cat((x, y), dim=1)
                     o = decode(y[0].tolist())
-                    file.write(o)
                     if o == '\n':
                         continue
                     line = o;
                     while o != '\n':
                         y = model.generate(x, 1, temperature=temperature, top_k=top_k)
                         x = torch.cat((x, y), dim=1)
+                        if y[0].tolist()[0] > 22:
+                            continue
                         o = decode(y[0].tolist())
-                        file.write(o)
                         line = line + o;
                         #print(o)
                         #print(decode(y[0].tolist()))
                     line = line.strip().split('\t')
                     print(line)
-                    for i in range(1, 4):
-                        if len(line) > i:
-                            prediction[j][i-1] = line[i]
-                        else:
-                            prediction[j][i-1] = 0
-                    gtime = time.time() - t0
-                    gtimerecord.append(gtime)
-                    #print('sample time' + str(gtime))
+                    for i in range(1, 5):
+                        while True:
+                            if len(line) > i:
+                                try:
+                                    prediction[j][i-1] = line[i]
+                                    break
+                                except ValueError:
+                                    line.pop(i)
+                            else:
+                                prediction[j][i-1] = -1000
+                                break
     gtarray = gtarray.T[1:]
     gtarrayx = gtarray[0]
     gtarrayy = gtarray[1]
     gtarrayz = gtarray[2]
+    print(gtarrayz)
     prediction = prediction.T[1:]
     predictionx = prediction[0]
     predictiony = prediction[1]
     predictionz = prediction[2]
+    print(predictionz)
     dx = gtarrayx - predictionx
     dy = gtarrayy - predictiony
     dz = gtarrayz - predictionz
     p = []
     for i in range(len(dx)):
         p.append(np.sqrt(dx[i]**2 + dy[i]**2+ dz[i]**2))
+        #check if this point is missed
+        #if abs(dx[i]) > 0.05 or abs(dy[i]) > 0.05 or abs(dz[i]) > 0.05:
+        if abs(dx[i]) > 25 or abs(dy[i]) > 25 or abs(dz[i]) > 9:
+            miss += 1
         print('ade point%i:  ' + str(p[i]), i)
-    print('total ade:' + str(np.mean(p)))
-    print('generating time:')
-    print(gtimerecord)
-
+        if p[i] < 100:
+            ade.append(p[i])
+    if p[9] < 100:
+        fde.append(p[9])
+print('number of test' + str(num_tested))
+print('number of test point' + str(len(ade)))
+print(ade)
+print(fde)
+print(str(round(np.mean(ade),2)) + '$\pm$' + str(round(np.var(ade)**0.5,2)))
+print(str(round(np.mean(fde),2)) + '$\pm$' + str(round(np.var(fde)**0.5,2)))
+print('generating time:')
+gtime = time.time() - t0
+print(gtime)
+print('AGT:')
+print(gtime/(num_tested*10))
+print('miss rate:')
+print(miss)
+print(miss/(num_tested*10))
                     # with open("output.txt", "w") as file:
                     #     print(decode(y[0].tolist()), file = file)
                     # # with open("output.txt", 'r') as f:

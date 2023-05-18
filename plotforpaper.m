@@ -184,4 +184,26 @@ K = convhulln(point10);
 vertices = point10;
 faces = K;
 trisurf(faces, vertices(:,1), vertices(:,2), vertices(:,3));
+%%
+% Generate some example 3D points
+x = randn(100,1);
+y = randn(100,1);
+z = randn(100,1);
 
+% Calculate the convex hull of the points
+K = boundary(x,y,z);
+
+% Calculate the confidence level for each face
+conf = rand(size(K,1),1); % Replace this with your own confidence levels
+
+% Color the faces based on their confidence levels
+trisurf(K, x, y, z, 'FaceColor', 'interp', 'FaceVertexCData', conf);
+
+% Add a colorbar to show the mapping between confidence level and color
+colorbar;
+%% 
+[F, V] = boundary(point, 0);
+vertices = V;
+faces = F;
+trisurf(faces, point(:,1), point(:,2), point(:,3));
+hold on
