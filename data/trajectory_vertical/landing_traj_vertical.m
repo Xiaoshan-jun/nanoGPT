@@ -1,31 +1,32 @@
 %%
 %straight line
-%fileID = fopen('datasets/linear/train/train.txt','w');
-%fileID = fopen('datasets/linear/val/val.txt','w');
-%fileID = fopen('datasets/linear/vis/vis.txt','w');
-fileID = fopen('train.txt','w');
+
+%fileID = fopen('train.txt','w');
 %fileID = fopen('val.txt','w');
-% fileID = fopen('testgt.txt','w');
-% fileID = fopen('testdisrupt.txt','w');
-% fileID = fopen('testmusk.txt','w');
-% fileID = fopen('testpointmusk.txt','w');
 mvx = 25; %max horizontal speed
 mvy = 25; %max horizontal speed
 mvz = 9;  %max descend speed
 
-for i = 1 : 100 %trajectory number
-    if mod(i,4) == 0
+for i = 266: 289 %trajectory number
+    if mod(i,8) == 0
     state = [400 + 200*(rand()-0.5) , 400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
-    elseif mod(i,4) == 1
+    elseif mod(i,8) == 1
     state = [-400 + 200*(rand()-0.5) , 400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
-    elseif mod(i,4) == 2
+    elseif mod(i,8) == 2
     state = [400 + 200*(rand()-0.5) , -400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
-    elseif mod(i,4)==3
+    elseif mod(i,8)== 3
+    state = [200*(rand()-0.5) , 400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
+    elseif mod(i,8) == 4
+    state = [400 + 200*(rand()-0.5) , 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
+    elseif mod(i,8) == 5
+    state = [200*(rand()-0.5) , -400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
+    elseif mod(i,8) == 6
+    state = [-400 + 200*(rand()-0.5) , 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
+    elseif mod(i,8) == 7
     state = [-400 + 200*(rand()-0.5) , -400 + 200*(rand()-0.5), 140 + 15*(rand()-0.5)];
     end
-    first = 1;        
-%     filename = sprintf('val/testgt%d.txt', i);
-%     fileID = fopen(filename,'w');
+    filename = sprintf('val/testgt%d.txt', i);
+    fileID = fopen(filename,'w');
     destination = [0, 0, state(3)];
     for t = 1 : 9
         vb = (destination - state)/(11 - t);
@@ -48,7 +49,7 @@ for i = 1 : 100 %trajectory number
         state(1) = state(1) + xv;
         state(2) = state(2) + yv;
         state(3) = max(state(3) + zv,0); % bound z above zero
-        if first == 1
+        if t == 1
             h = 'new';
             first = 0;
         elseif t <= 10
@@ -56,7 +57,7 @@ for i = 1 : 100 %trajectory number
         else
             h = 'future';
         end
-        fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t,state(1),state(2),state(3));
+        fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, state(1),state(2),state(3));
         
         historyx(t) = state(1);
         historyy(t) = state(2);
@@ -84,7 +85,7 @@ for i = 1 : 100 %trajectory number
         state(1) = state(1) + xv;
         state(2) = state(2) + yv;
         state(3) = max(state(3) + zv,0); % bound z above zero
-        if first == 1
+        if t == 1
             h = 'new';
             first = 0;
         elseif t <= 10
@@ -92,7 +93,7 @@ for i = 1 : 100 %trajectory number
         else
             h = 'future';
         end
-        fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t,state(1),state(2),state(3));
+        fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, state(1),state(2),state(3));
         
         historyx(t) = state(1);
         historyy(t) = state(2);
@@ -100,8 +101,8 @@ for i = 1 : 100 %trajectory number
     end
     %disrupt
     for d = 1:10
-%         filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
-%         fileID = fopen(filename,'w');
+        filename = sprintf('val/testdisrupt%d.txt', 10*i + d);
+        fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -120,7 +121,7 @@ for i = 1 : 100 %trajectory number
            newhistoryx = newhistoryx + dx;
            newhistoryy = newhistoryy + dy;
            newhistoryz = newhistoryz + dz;
-           fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+           fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, newhistoryx,newhistoryy,newhistoryz);
         end
         for t = 11:20
             if t == 1
@@ -130,14 +131,14 @@ for i = 1 : 100 %trajectory number
             else
                 h = 'future';
             end
-           fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t,historyx(t),historyy(t),historyz(t));
+           fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, historyx(t),historyy(t),historyz(t));
         end
     end
 
     %disruption with variable musk
     for d = 1:10
-%         filename = sprintf('val/testmusk%d.txt', 10*i + d);
-%         fileID = fopen(filename,'w');
+        filename = sprintf('val/testmusk%d.txt', 10*i + d);
+        fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -166,7 +167,7 @@ for i = 1 : 100 %trajectory number
                newhistoryz = newhistoryz + 10*dz;
            end
            
-           fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+           fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h,newhistoryx,newhistoryy,newhistoryz);
         end
         for t = 11:20
             if t == 1
@@ -176,13 +177,13 @@ for i = 1 : 100 %trajectory number
             else
                 h = 'future';
             end
-           fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t,historyx(t),historyy(t),historyz(t));
+           fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, historyx(t),historyy(t),historyz(t));
         end
     end
     %disruption with point missed
     for d = 1:10
-%         filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
-%         fileID = fopen(filename,'w');
+        filename = sprintf('val/testpointmusk%d.txt', 10*i + d);
+        fileID = fopen(filename,'w');
         for t = 1:10
             if t == 1
                 h = 'new';
@@ -211,9 +212,9 @@ for i = 1 : 100 %trajectory number
                newhistoryz = newhistoryz + 10*dz;
            end
            if rand()> 0.15
-                fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx,newhistoryy,newhistoryz);
+                fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, newhistoryx,newhistoryy,newhistoryz);
            else
-                fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t+dt,newhistoryx+10*dx,newhistoryy+10*dy,newhistoryz+10*dz);
+                fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, newhistoryx+10*dx,newhistoryy+10*dy,newhistoryz+10*dz);
            end
         end
         for t = 11:20
@@ -224,7 +225,7 @@ for i = 1 : 100 %trajectory number
             else
                 h = 'future';
             end
-           fprintf(fileID,'%s\t%2.1f\t%4.4f\t%4.4f\t%4.4f\n',h, t,historyx(t),historyy(t),historyz(t));
+           fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, historyx(t),historyy(t),historyz(t));
         end
     end
     figure(1)
@@ -236,8 +237,8 @@ for i = 1 : 100 %trajectory number
     zlabel('z', 'FontSize', 14)
     hold on
 end
-%str = sprintf('linear%d.png', i);
-%print(gcf,str,'-dpng','-r900'); 
+% str = sprintf('vertical_train.png', i);
+% print(gcf,str,'-dpng','-r900'); 
 fclose(fileID);
 % points = [transpose(historyx), transpose(historyy), transpose(historyz)];
 % Compute the convex hull using the convhulln function

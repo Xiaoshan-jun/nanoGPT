@@ -5,8 +5,8 @@
 agentcount = 0;
 t = 0;
 b = 0.1;
-fileID = fopen('realdata2_train.txt','w');
-%fileID = fopen('realdata2_val.txt','w');
+fileID = fopen('train.txt','w');
+%fileID = fopen('val.txt','w');
 for i = 0:80
     r = rem( i , 10 );
     if r == 8 
