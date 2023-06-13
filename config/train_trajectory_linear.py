@@ -11,7 +11,7 @@ wandb_project = 'trajectory_linear'
 wandb_run_name = 'ft-' + str(time.time())
 
 dataset = 'trajectory_linear'
-init_from = 'gpt2-medium' # this is the largest GPT-2 model
+init_from = 'gpt2' # this is the largest GPT-2 model
 
 # only save checkpoints if the validation loss improves
 always_save_checkpoint = False
@@ -22,7 +22,7 @@ always_save_checkpoint = False
 batch_size = 1
 gradient_accumulation_steps = 256
 max_iters = 2000
-block_size = 256
+
 # finetune at constant LR
 learning_rate = 3e-5
 decay_lr = False

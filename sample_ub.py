@@ -53,7 +53,6 @@ if init_from == 'resume':
 elif init_from.startswith('gpt2'):
     # init from a given GPT-2 model
     model = GPT.from_pretrained(init_from, dict(dropout=0.0))
-
 model.eval()
 model.to(device)
 if compile:
@@ -80,17 +79,18 @@ else:
     decode = lambda l: enc.decode(l)
 
 # encode the beginning of the prompt0
-directory = 'data/trajectory_real_ub/val_smooth/' # Replace with the path to your directory
+directory = 'data/trajectory_real_smooth_raylr/val/' # Replace with the path to your directory
 directory = 'data/trajectory_linear/val/'
+directory = 'data/trajectory_vertical/val/'
 t0 = time.time()
 num_tested = 0
 fde = []
 ade = []
 miss = 0
 for filename in os.listdir(directory):
-    #if filename.startswith('testdisrupt'):
+    if filename.startswith('testdisrupt'):
     #if filename.startswith('testmusk'):
-    if filename.startswith('testpointmusk'):
+    #if filename.startswith('testpointmusk'):
     #if filename.startswith('testgt'):
         with open(directory + filename) as f:
             data = f.read()
@@ -130,6 +130,8 @@ for filename in os.listdir(directory):
                 line = o;
                 while o != '\n':
                     y = model.generate(x, 1, temperature=temperature, top_k=top_k)
+                    while y[0].tolist()[0] > 22:
+                        y = model.generate(x, 1, temperature=temperature, top_k=top_k)
                     o = decode(y[0].tolist())
                     x = torch.cat((x, y), dim=1)
                     line = line + o;
@@ -195,8 +197,8 @@ for filename in os.listdir(directory):
     for i in range(len(dx)):
         p.append(np.sqrt(dx[i]**2 + dy[i]**2+ dz[i]**2))
         #check if this point is missed
-        if abs(dx[i]) > 0.15 or abs(dy[i]) > 0.15 or abs(dz[i]) > 0.15:
-        # if abs(dx[i]) > 25 or abs(dy[i]) > 25 or abs(dz[i]) > 9:
+        #if abs(dx[i]) > 0.15 or abs(dy[i]) > 0.15 or abs(dz[i]) > 0.15:
+        if abs(dx[i]) > 25 or abs(dy[i]) > 25 or abs(dz[i]) > 9:
             miss += 1
         print('ade point%i:  ' + str(p[i]), i)
         if p[i] < 100:
@@ -211,10 +213,10 @@ print('generating time:')
 gtime = time.time() - t0
 print(gtime)
 print('AGT:')
-print(gtime/(num_tested*10))
+print(round(gtime/(num_tested*10),3))
 print('miss rate:')
 print(miss)
-print(miss/(num_tested*10))
+print(round(miss/(num_tested*10),3))
                     # with open("output.txt", "w") as file:
                     #     print(decode(y[0].tolist()), file = file)
                     # # with open("output.txt", 'r') as f:
