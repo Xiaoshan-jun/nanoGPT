@@ -81,7 +81,7 @@ else:
 # encode the beginning of the prompt0
 directory = 'data/trajectory_real_smooth_raylr/val/' # Replace with the path to your directory
 directory = 'data/trajectory_linear/val/'
-directory = 'data/trajectory_vertical/val/'
+#directory = 'data/trajectory_vertical/val/'
 t0 = time.time()
 num_tested = 0
 fde = []

@@ -134,7 +134,7 @@ for d = 1:10
            
            fprintf(fileID,'%s\t%4.2f\t%4.2f\t%4.2f\n',h, newhistoryx,newhistoryy,newhistoryz);
         end
-        for t = 11:20
+        for t = 11:20newhistoryz
             if t == 1
                 h = 'new';
             elseif t <= 10
